@@ -10,7 +10,7 @@ subMenu();
 featured();
 feedLayout();
 pagination();
-archive();
+// archive();
 video();
 gallery();
 table();
@@ -18,13 +18,17 @@ burger();
 
 window.addEventListener('scroll', function () {
     'use strict';
-    if (body.classList.contains('home-template') && body.classList.contains('with-full-cover')) {
+    if (body.classList.contains('home-template') && body.classList.contains('with-full-cover') && !document.querySelector('.cover').classList.contains('half')) {
         if (timeout) {
             window.cancelAnimationFrame(timeout);
         }
         timeout = window.requestAnimationFrame(portalButton);
     }
 });
+
+if (document.querySelector('.cover') && document.querySelector('.cover').classList.contains('half')) {
+    body.classList.add('portal-visible');
+}
 
 function portalButton() {
     'use strict';
@@ -186,6 +190,7 @@ function archive(data) {
     'use strict';
     if (!body.classList.contains('logged-in')) return;
 
+    var feed = document.querySelector('.post-feed');
     var posts = data || document.querySelectorAll('.feed');
 
     posts.forEach(function (post) {
@@ -227,15 +232,6 @@ function video() {
 
 function gallery() {
     'use strict';
-    var images = document.querySelectorAll('.kg-gallery-image img');
-    images.forEach(function (image) {
-        var container = image.closest('.kg-gallery-image');
-        var width = image.attributes.width.value;
-        var height = image.attributes.height.value;
-        var ratio = width / height;
-        container.style.flex = ratio + ' 1 0%';
-    });
-
     pswp(
         '.kg-gallery-container',
         '.kg-gallery-image',
